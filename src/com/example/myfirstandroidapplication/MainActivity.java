@@ -5,14 +5,19 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.GroundOverlay;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -70,13 +75,23 @@ public class MainActivity extends Activity
 		        .title("Kiel")
 		        .snippet("Kiel is cool")
 		        .icon(BitmapDescriptorFactory
-		            .fromResource(R.drawable.ic_launcher)));
+		            .fromResource(R.drawable.ic_launcher)));    
+		    
 
 		    // Move the camera instantly to hamburg with a zoom of 15.
 		    map.moveCamera(CameraUpdateFactory.newLatLngZoom(HAMBURG, 15));
 
 		    // Zoom in, animating the camera.
-		    map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+		    map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);    		    	    
+		    
+		    BitmapDescriptor image = BitmapDescriptorFactory.fromResource(R.drawable.hide_map_tile);
+		    LatLngBounds bounds = new LatLngBounds(HAMBURG, KIEL);
+		    
+		    GroundOverlay groundOverlay = map.addGroundOverlay(new GroundOverlayOptions()
+		     .image(image)
+		     .positionFromBounds(bounds)
+		     .transparency((float) 0.5));
+		    
 	}
 
 }
